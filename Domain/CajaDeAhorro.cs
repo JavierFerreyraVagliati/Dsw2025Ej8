@@ -9,7 +9,7 @@ namespace Dsw2025Ej8.Domain
     class CajaDeAhorro : CuentaBancaria
     {
         public decimal TasaDeInteres { get; set; }
-        public CajaDeAhorro(decimal tasaDeInteres, string numero, decimal saldo, string[] titulares) : base(numero, saldo, titulares)
+        public CajaDeAhorro(string numero, decimal saldo) : base(numero, saldo)
         {
             TasaDeInteres = tasaDeInteres;
         }
