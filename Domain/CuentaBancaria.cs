@@ -7,7 +7,7 @@ public abstract class CuentaBancaria
     public string Numero { get; }
     public decimal Saldo { get; protected set; }
     public Estado Estado { get; set; }
-    public string[] Titulares { get; }
+    public string[] Titulares { get; init; }
     protected CuentaBancaria(string numero, decimal saldo)
     {
         Numero = numero;
@@ -29,12 +29,8 @@ public abstract class CuentaBancaria
             throw new MontoNoValido();
         }
     }
-    public void ValidarCuenta(Estado estado) { 
+    public void ValidarCuenta() { 
     
-        if (estado != Estado.Activa) { throw new CuentaNoActiva(estado); }
+        if (Estado != Estado.Activa) { throw new CuentaNoActiva(Estado); }
     }
-    public void ValidarSaldo(decimal saldo) {
-        if(saldo=)
-    }
-   
 }

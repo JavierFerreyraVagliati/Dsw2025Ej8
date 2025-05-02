@@ -15,31 +15,23 @@ namespace Dsw2025Ej8.Domain
         }
         public override void Depositar(decimal monto)
         {
-            ValidarCuenta(Estado);
+            ValidarCuenta();
             ValidarMonto(monto);
             Saldo += monto;
-
         }
 
         public override void Retirar(decimal monto)
         {
-            ValidarCuenta(Estado);
+            ValidarCuenta();
             ValidarMonto(monto);
-            if (Saldo <= 0) {
-                throw new SaldoInsuficiente();
-            }
+            if (Saldo <= 0 || monto>Saldo) throw new SaldoInsuficiente();
             Saldo -= monto;
-
         }
 
         public void AplicarInteres()
         {
-            ValidarCuenta(Estado);
+            ValidarCuenta();
             Saldo += Saldo * TasaDeInteres;
-
         }
     }
-
-
-
 }

@@ -17,7 +17,7 @@ namespace Dsw2025Ej8.Domain
 
         public override void Depositar(decimal monto)
         {
-            ValidarCuenta(Estado);
+            ValidarCuenta();
             ValidarMonto(monto);
             monto -= monto * Comision;
             Saldo += monto;
@@ -26,13 +26,14 @@ namespace Dsw2025Ej8.Domain
 
         public override void Retirar(decimal monto)
         {
-            ValidarCuenta(Estado);
+            ValidarCuenta();
             ValidarMonto(monto);
             if (Saldo - monto >= -LimiteDeDescubierto)
             {
                 Saldo -= monto;
+                if (Saldo < 0) Estado = Estado.Suspendida;
             }
-            if (Saldo < 0)
+            else
             {
                 Estado = Estado.Suspendida;
                 throw new SaldoInsuficiente();
