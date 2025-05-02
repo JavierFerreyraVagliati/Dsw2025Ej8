@@ -15,37 +15,109 @@ incluya número, tipo y saldo(utilizar una clase anónima)*/
 internal class PrincipalView
 {
     CajaDeAhorro cajaAhorroUno;
-    CajaDeAhorro cajaAhorroDos = null;
-    CuentaCorriente cuentaCorrienteUno = null;
-    CuentaCorriente cuentaCorrienteDos = null;
+    CajaDeAhorro cajaAhorroDos ;
+    CuentaCorriente cuentaCorrienteUno;
+    CuentaCorriente cuentaCorrienteDos;
 
     public PrincipalView() { }
 
     public void Iniciar()
     {
-
         InicializarInstancias();
         Console.WriteLine("Iniciar programa\t");
 
-        Console.WriteLine($"Recorriendo la primera cuenta de {cajaAhorroUno.GetType().Name}");
-
-        //El monto recibido por cualquier operación no puede ser menor o igual a 0
-        EjecutarAccion("Depósito de $0 ", () => { 
+        OperarConCuenta(cajaAhorroUno, new List<Action>
+    {
+        () => EjecutarAccion("Depósito de $0", () => {
             cajaAhorroUno.Depositar(0);
-            Console.WriteLine($"El saldo de la cuenta luego del depósito es {cajaAhorroUno.Saldo}");
-        });
-        EjecutarAccion("Retiro de $1000", () => {
+            Console.WriteLine($"->Estado | Deposito | Saldo actual: {cajaAhorroUno.Saldo}");
+        }),
+        () => EjecutarAccion("Retiro de $1200", () => {
             cajaAhorroUno.Retirar(1200);
-            Console.WriteLine($"El saldo de la cuenta luego del retiro es {cajaAhorroUno.Saldo}");
-        });
-        EjecutarAccion("Aplica interes", () =>
-        {
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cajaAhorroUno.Saldo}");
+        }),
+        () => EjecutarAccion("Aplicar Interés", () => {
             cajaAhorroUno.AplicarInteres();
-            Console.WriteLine($"El saldo de la cuenta luego de aplicar intereses es {cajaAhorroUno.Saldo}");
-        });
+            Console.WriteLine($"->Estado | Interés | Saldo actual: {cajaAhorroUno.Saldo}");
+        })
+    });
 
-        //Cualquier operación se debe realizar si la cuenta está activa, en cualquier otro caso generar una excepción del tipo CuentaNoActiva
+        OperarConCuenta(cajaAhorroDos, new List<Action>
+    {
+        () => EjecutarAccion("Depósito de $1500", () => {
+            cajaAhorroDos.Depositar(1500);
+            Console.WriteLine($"->Estado | Deposito | Saldo actual: {cajaAhorroDos.Saldo}");
+        }),
+        () => EjecutarAccion("Retiro de $1300", () => {
+            cajaAhorroDos.Retirar(1300);
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cajaAhorroDos.Saldo}");
+        }),
+        () => EjecutarAccion("Aplicar Interés", () => {
+            cajaAhorroDos.AplicarInteres();
+            Console.WriteLine($"->Estado | Interés | Saldo actual: {cajaAhorroDos.Saldo}");
+        }),
+        () => EjecutarAccion("Retiro de $1000", () => {
+            cajaAhorroDos.Retirar(1300);
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cajaAhorroDos.Saldo}");
+        })
+    });
 
+        OperarConCuenta(cuentaCorrienteUno, new List<Action>
+    {
+        () => EjecutarAccion("Depósito de $0", () => {
+            cuentaCorrienteUno.Depositar(0);
+            Console.WriteLine($"->Estado | Deposito | Saldo actual: {cuentaCorrienteUno.Saldo} | Descubierto: {cuentaCorrienteUno.LimiteDeDescubierto}");
+        }),
+        () => EjecutarAccion("Retiro de $1400", () => {
+            cuentaCorrienteUno.Retirar(1400);
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cuentaCorrienteUno.Saldo} | Descubierto: {cuentaCorrienteUno.LimiteDeDescubierto}");
+        })
+    });
+
+        OperarConCuenta(cuentaCorrienteDos, new List<Action>
+    {
+        () => EjecutarAccion("Depósito de $1000", () => {
+            cuentaCorrienteDos.Depositar(1000);
+            Console.WriteLine($"->Estado | Deposito | Saldo actual: {cuentaCorrienteDos.Saldo} | Descubierto: {cuentaCorrienteDos.LimiteDeDescubierto}");
+        }),
+        () => EjecutarAccion("Retiro de $1400", () => {
+            cuentaCorrienteDos.Retirar(1400);
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cuentaCorrienteDos.Saldo} | Descubierto: {cuentaCorrienteDos.LimiteDeDescubierto}");
+        }),
+        () => EjecutarAccion("Depósito de $2000", () => {
+            cuentaCorrienteDos.Depositar(2000);
+            Console.WriteLine($"->Estado | Deposito | Saldo actual: {cuentaCorrienteDos.Saldo} | Descubierto: {cuentaCorrienteDos.LimiteDeDescubierto}");
+        }),
+        () => EjecutarAccion("Retiro de $5000", () => {
+            cuentaCorrienteDos.Retirar(5000);
+            Console.WriteLine($"->Estado | Retiro | Saldo actual: {cuentaCorrienteDos.Saldo} | Descubierto: {cuentaCorrienteDos.LimiteDeDescubierto}");
+        })
+    });
+        new Action(() =>
+        {
+            Console.WriteLine(cajaAhorroUno.ToString());
+            Console.WriteLine(cajaAhorroDos.ToString());
+            Console.WriteLine(cuentaCorrienteUno.ToString());
+            Console.WriteLine(cuentaCorrienteDos.ToString());
+        })();
+
+
+
+    }
+
+    private void OperarConCuenta(CuentaBancaria cuenta, List<Action> operaciones)
+    {
+        Console.WriteLine($"Recorriendo la cuenta: {cuenta.GetType().Name} | Numero : {cuenta.Numero}");
+        Console.WriteLine("--------------------------------------------");
+
+        foreach (var operacion in operaciones)
+        {
+            operacion();
+            Console.WriteLine("--------------------------------------------");
+        }
+
+        Console.WriteLine("**************************************************************************** \t");
+        Console.WriteLine();
     }
 
     public void InicializarInstancias()
@@ -60,15 +132,15 @@ internal class PrincipalView
             TasaDeInteres = 0.25m,
             Titulares = ["Lucas Chipolari", "Cesar Delgado"]
         };
-        cuentaCorrienteUno = new CuentaCorriente("003", 1000000)
+        cuentaCorrienteUno = new CuentaCorriente("003", 1000)
         {
-            LimiteDeDescubierto = 3000000m,
+            LimiteDeDescubierto = 300m,
             Comision = 0.01m,
             Titulares = ["Juan Perez", "Pepe Perez"]
         };
-        cuentaCorrienteDos = new CuentaCorriente("004", 2000000)
+        cuentaCorrienteDos = new CuentaCorriente("004", 1000)
         {
-            LimiteDeDescubierto = 10000m,
+            LimiteDeDescubierto = 1000m,
             Comision = 0.10m,
             Titulares = ["Homero Simpson", "Lisa Simpson"]
         };
@@ -76,13 +148,14 @@ internal class PrincipalView
 
     private void EjecutarAccion(string mensaje, Action accion)
     {
+        Console.WriteLine($"Operacion: {mensaje}");
         try
         {
             accion();
         }
         catch(Exception e)
         {
-            Console.WriteLine($"Ocurrió un error realizando {mensaje}");
+            Console.WriteLine($"Ocurrió un error realizando la operacion '{mensaje}' ");
             Console.WriteLine(e.Message);
         }
     }

@@ -6,14 +6,14 @@ public abstract class CuentaBancaria
 {
     public string Numero { get; }
     public decimal Saldo { get; protected set; }
-    public Estado Estado { get; set; }
+    public Estado Estado { get; protected set; }
     public string[] Titulares { get; init; }
     protected CuentaBancaria(string numero, decimal saldo)
     {
         Numero = numero;
         Saldo = saldo;
         Estado = Estado.Activa;
-    
+        Titulares = Array.Empty<string>();
     }
 
     public virtual void Depositar(decimal monto)
@@ -33,4 +33,9 @@ public abstract class CuentaBancaria
     
         if (Estado != Estado.Activa) { throw new CuentaNoActiva(Estado); }
     }
+    public override string ToString()
+    {
+        return $"Numero: {Numero} | Tipo: {this.GetType().Name} | Saldo: {Saldo} | Estado: {Estado}";
+    }
+
 }

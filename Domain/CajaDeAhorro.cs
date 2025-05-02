@@ -12,6 +12,7 @@ namespace Dsw2025Ej8.Domain
         public decimal TasaDeInteres { get; init; }
         public CajaDeAhorro(string numero, decimal saldo) : base(numero, saldo)
         {
+            TasaDeInteres = 0;
         }
         public override void Depositar(decimal monto)
         {
@@ -24,7 +25,11 @@ namespace Dsw2025Ej8.Domain
         {
             ValidarCuenta();
             ValidarMonto(monto);
-            if (Saldo <= 0 || monto>Saldo) throw new SaldoInsuficiente();
+            if (Saldo <= 0 || monto > Saldo)
+            {
+                Estado = Estado.Suspendida;
+                throw new SaldoInsuficiente();
+            }
             Saldo -= monto;
         }
 
@@ -33,5 +38,6 @@ namespace Dsw2025Ej8.Domain
             ValidarCuenta();
             Saldo += Saldo * TasaDeInteres;
         }
+        
     }
 }

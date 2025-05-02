@@ -8,7 +8,7 @@ namespace Dsw2025Ej8.Exceptions
 {
     class SaldoInsuficiente : Exception
     {
-        public SaldoInsuficiente(): base(" La cuenta no cuenta con saldo para la operación\r\nsolicitada. Fue suspendida.") { }
+        public SaldoInsuficiente(): base(" La cuenta no cuenta con saldo para la operación solicitada. Fue suspendida.") { }
     
         public SaldoInsuficiente(string mensaje):base(mensaje) { }
     }

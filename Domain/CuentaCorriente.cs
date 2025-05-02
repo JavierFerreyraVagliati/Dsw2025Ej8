@@ -13,6 +13,8 @@ namespace Dsw2025Ej8.Domain
         public decimal Comision { get; set; }
         public CuentaCorriente(string numero, decimal saldo) : base(numero, saldo)
         {
+            Comision = 0;
+            LimiteDeDescubierto = 0;
         }
 
         public override void Depositar(decimal monto)
@@ -39,5 +41,6 @@ namespace Dsw2025Ej8.Domain
                 throw new SaldoInsuficiente();
             }
         }
+   
     }
 }
