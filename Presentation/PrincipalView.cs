@@ -8,10 +8,7 @@ using Dsw2025Ej8.Domain;
 
 namespace Dsw2025Ej8.Presentation;
 
-/*10. Instanciar 4 cuentas(dos de cada tipo) y realizar diferentes operaciones que
-permitan comprobar todas las funciones posibles.
-11. Recorrer las 4 cuentas creadas y mostrar por consola un resumen de cada una, que
-incluya número, tipo y saldo(utilizar una clase anónima)*/
+
 internal class PrincipalView
 {
     private CajaDeAhorro cajaAhorroUno;
