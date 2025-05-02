@@ -33,9 +33,6 @@ public abstract class CuentaBancaria
     
         if (Estado != Estado.Activa) { throw new CuentaNoActiva(Estado); }
     }
-    public override string ToString()
-    {
-        return $"Numero: {Numero} | Tipo: {this.GetType().Name} | Saldo: {Saldo} | Estado: {Estado}";
-    }
+
 
 }
