@@ -1,4 +1,6 @@
-﻿namespace Dsw2025Ej8.Domain;
+﻿using Dsw2025Ej8.Exceptions;
+
+namespace Dsw2025Ej8.Domain;
 
 public abstract class CuentaBancaria
 {
@@ -22,4 +24,17 @@ public abstract class CuentaBancaria
     {
     }
 
+    public void ValidarMonto(decimal monto) {
+        if (monto <= 0) {
+            throw new MontoNoValido();
+        }
+    }
+    public void ValidarCuenta(Estado estado) { 
+    
+        if (estado != Estado.Activa) { throw new CuentaNoActiva(estado); }
+    }
+    public void ValidarSaldo(decimal saldo) {
+        if(saldo=)
+    }
+   
 }

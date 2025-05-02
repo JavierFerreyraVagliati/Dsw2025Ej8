@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dsw2025Ej8.Exceptions;
 
 namespace Dsw2025Ej8.Domain
 {
@@ -16,6 +17,8 @@ namespace Dsw2025Ej8.Domain
 
         public override void Depositar(decimal monto)
         {
+            ValidarCuenta(Estado);
+            ValidarMonto(monto);
             monto -= monto * Comision;
             Saldo += monto;
 
@@ -23,7 +26,8 @@ namespace Dsw2025Ej8.Domain
 
         public override void Retirar(decimal monto)
         {
-
+            ValidarCuenta(Estado);
+            ValidarMonto(monto);
             if (Saldo - monto >= -LimiteDeDescubierto)
             {
                 Saldo -= monto;
@@ -31,6 +35,7 @@ namespace Dsw2025Ej8.Domain
             if (Saldo < 0)
             {
                 Estado = Estado.Suspendida;
+                throw new SaldoInsuficiente();
             }
         }
     }
